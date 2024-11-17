@@ -1,6 +1,7 @@
 # Project Name  (Company Count Application)
 
-https://github.com/suyogbhere/Company_Count_Application/tree/master
+- https://github.com/suyogbhere/Company_Count_Application/tree/master (For Asynchronus code)
+- https://github.com/suyogbhere/Synchronous_Company_Count_Application/tree/master (For Synchronus code)
 
 - Python Version: Python 3.12.0
 - Bootstrap Version: 4.0
