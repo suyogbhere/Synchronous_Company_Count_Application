@@ -1,0 +1,23 @@
+{% extends 'app/index.html' %}
+
+{% block content %}
+
+<div class="mx-3">
+    {% if request.user %}
+    {% if messages %}
+    {% for message in messages %}
+        <p {% if message %} class="alert alert-{{message.tags}} mb-5 mt-4 alert-dismissible fade show col-sm-6"  {% endif %} role="alert" >{{message}}
+            <!-- <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button> -->
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" area-label="Close"> -->
+            </button>
+        </p>
+    {% endfor %}
+    {% endif %}
+</div>
+<h2 class="mt-2 mx-3">Welcome {{request.user.username}} !!</h2>
+{% endif %}
+
+{% endblock content %}
+

@@ -1,0 +1,83 @@
+{% extends 'app/index.html' %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <div>
+        {% if messages %}
+        {% for message in messages %}
+            <p {% if message %} class="alert alert-{{message.tags}} mb-5 mt-4 alert-dismissible fade show col-sm-6"  {% endif %} role="alert" >{{message}}
+                <!-- <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" area-label="Close"> -->
+                </button>
+            </p>
+        {% endfor %}
+        {% endif %}
+    </div>
+     <div class="shadow p-4 mt-3">
+      <h3>Upload Data</h3>
+      <hr>
+      <form id="upload-form" action="" method="post" enctype="multipart/form-data"  class="shadow">
+       {% csrf_token %}
+       <div class="custom-file mb-3 col-sm-3">
+          <input type="file" class="custom-file-input" name="file" id="UploadFile">
+          <label class="custom-file-label" for="UploadFile">Select file</label>
+        </div>
+      <div>
+        <input type="submit" class="btn btn-primary" value="Start Upload">
+      </div>
+      <!-- <div class="progress mt-3" id="progress-container">
+        <div class="progress-bar progress-bar-striped" id="upload-progress"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        <span id="progress-percentage">0%</span>
+      </div> -->
+      </form>
+     </div>
+</div>
+<script>
+        $(document).ready(function () {
+            $('#upload-form').on('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const formData = new FormData(this);
+                const url = $(this).attr('action') || ''; // Django view URL
+
+                $('#progress-container').show();
+
+                $.ajax({
+                    url: 'http://127.0.0.1:8000/upload_data/',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    xhr: function () {
+                        const xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener('progress', function (e) {
+                            if (e.lengthComputable) {
+                                const percentComplete = Math.round((e.loaded / e.total) * 100);
+                                $('#upload-progress').val(percentComplete);
+                                $('#progress-percentage').text(`${percentComplete}%`);
+                            }
+                        }, false);
+                        return xhr;
+                    },
+                    success: function (response) {
+                        alert('File uploaded successfully!');
+                        $('#progress-container').hide();
+                        $('#upload-progress').val(0);
+                        $('#progress-percentage').text('0%');
+                    },
+                    error: function (xhr, status, error) {
+                        alert('An error occurred while uploading the file.');
+                        $('#progress-container').hide();
+                        $('#upload-progress').val(0);
+                        $('#progress-percentage').text('0%');
+                    }
+                });
+            });
+        });
+    </script>
+
+{% endblock content %}

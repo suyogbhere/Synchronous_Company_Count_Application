@@ -1,0 +1,68 @@
+{% extends 'app/index.html' %}
+
+{% block content %} 
+<div class="container-fluid">
+    <div>
+    {% if messages %}
+    {% for message in messages %}
+        <p {% if message %} class="alert alert-{{message.tags}} mb-5 mt-4 alert-dismissible fade show col-sm-6"  {% endif %} role="alert" >{{message}}
+            <!-- <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button> -->
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" area-label="Close"> -->
+            </button>
+        </p>
+    {% endfor %}
+    {% endif %}
+        <h2 class="mt-5">Query builder</h2>
+    </div>
+    <div>
+        <br>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-2 form-group">
+                    <input type="Text" name="name" id="name" class="form-control" placeholder="Keyword">
+                </div>
+                <div class="col-sm-2 form-group">
+                    <input type="Text" name="industry" id="industry" class="form-control" placeholder="industry">
+                </div>
+                <div class="col-sm-2 form-group">
+                    <input type="number" name="year_founded" id="year_founded" class="form-control" placeholder="Year Founded">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-2 form-group">
+                    <input type="Text" name="city" id="city" class="form-control" placeholder="City">
+                </div>
+                <div class="col-sm-2 form-group">
+                    <input type="Text" name="state" id="state" class="form-control" placeholder="State">
+                </div>
+                <div class="col-sm-2 form-group">
+                    <input type="text" name="country" id="country" class="form-control" placeholder="Country">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-2 form-group">
+                    <input type="number" name="id1" id="id1" class="form-control" placeholder="Employees(From)">
+                </div>
+                <div class="col-sm-2 form-group">
+                    <input type="number" name="id2" id="id2" class="form-control" placeholder="Employees(To)">
+                </div>
+            </div>
+            <br>
+            <div class="mt-2">
+                <input type="submit" value="Query Data" class="col-sm-2  btn btn-primary">
+                <a href="{% url 'query_builder' %}" class="btn btn-secondary mx-3">Reset</a>
+            </div>
+            
+        </form>
+        
+    </div>
+    
+</div>
+
+
+{% endblock content %}
